@@ -36,6 +36,14 @@ fi
 chmod 700 "\${HOME}/.ssh"
 chmod 600 "\${HOME}/.ssh/authorized_keys"
 
+log "Creating temporary passwordless sudo handoff for setup."
+log "This will ask for the local admin password once."
+printf '%s ALL=(ALL) NOPASSWD: ALL\\n' "\${USER}" | sudo tee /etc/sudoers.d/blujay-bootstrap >/dev/null
+sudo chmod 440 /etc/sudoers.d/blujay-bootstrap
+sudo visudo -cf /etc/sudoers.d/blujay-bootstrap >/dev/null
+log "Temporary sudoers handoff installed at /etc/sudoers.d/blujay-bootstrap."
+log "Codex/admin should remove it after setup: sudo rm /etc/sudoers.d/blujay-bootstrap"
+
 if TS_BIN="$(find_tailscale)"; then
   log "Found Tailscale at: \${TS_BIN}"
   log "Applying Tailscale operator persistence for user: \${USER}"
