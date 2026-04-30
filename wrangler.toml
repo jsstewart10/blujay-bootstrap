@@ -1,0 +1,7 @@
+name = "blujay-bootstrap"
+main = "src/worker.js"
+compatibility_date = "2026-04-30"
+
+routes = [
+  { pattern = "setup.blujay.io/mini", zone_name = "blujay.io" }
+]
